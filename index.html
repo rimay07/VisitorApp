@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>VISITOR MANAGEMENT APPLICATION</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="js/input.js"></script>
+	<script src="js/camera.js"></script>
+	<script type="text/javascript" src="js/lib/grid.js"></script>
+	<script type="text/javascript" src="js/lib/version.js"></script>
+	<script type="text/javascript" src="js/lib/detector.js"></script>
+	<script type="text/javascript" src="js/lib/formatinf.js"></script>
+	<script type="text/javascript" src="js/lib/errorlevel.js"></script>
+	<script type="text/javascript" src="js/lib/bitmat.js"></script>
+	<script type="text/javascript" src="js/lib/datablock.js"></script>
+	<script type="text/javascript" src="js/lib/bmparser.js"></script>
+	<script type="text/javascript" src="js/lib/datamask.js"></script>
+	<script type="text/javascript" src="js/lib/rsdecoder.js"></script>
+	<script type="text/javascript" src="js/lib/gf256poly.js"></script>
+	<script type="text/javascript" src="js/lib/gf256.js"></script>
+	<script type="text/javascript" src="js/lib/decoder.js"></script>
+	<script type="text/javascript" src="js/lib/qrcode.js"></script>
+	<script type="text/javascript" src="js/lib/findpat.js"></script>
+	<script type="text/javascript" src="js/lib/alignpat.js"></script>
+	<script type="text/javascript" src="js/lib/databr.js"></script>
+  <script>
+	var input = new Input();
+	var isProcessed = false;
+	var isSelected;
+	function getVisitorDetails(source){
+		switch (source){
+			case "textarea":
+				input.getTextAreaInput(document.getElementById("visitorDetails").value);
+				document.getElementById('local').style.display = 'none';
+			break;
+			case "local":
+				input.processLocalFile();
+				document.getElementById('textarea').style.display = 'none';
+			break;
+		}
+		isProcessed = true;
+		isSelected = source;
+	}
+	
+	function reset(){
+		if(isProcessed && isSelected == "local"){
+			location.reload();
+		}
+	}
+	
+	</script>
+  <style>
+	.navbar {
+      margin-bottom: 0;
+      background-color: #403f3d;
+      z-index: 9999;
+      border: 0;
+      font-size: 12px !important;
+      line-height: 1.42857143 !important;
+      letter-spacing: 3px;
+      border-radius: 0;
+      font-family: Montserrat, sans-serif;
+	}
+	
+	.navbar li a,  .navbar{
+		color: #a2a49e !important;
+	}
+
+	.navbar-nav li.active a, #saveBtn:hover {
+      color: #403f3d !important;
+      background-color: #b5b4b1 !important;
+	}
+	
+	.navbar-default .navbar-toggle {
+      border-color: transparent;
+      color: #b5b4b1 !important;
+	}
+	
+	.navbar .navbar-brand{
+		color:#ffc800 !important;
+		font-family:'Anton', sans-serif;
+		font-size:26px;
+	}
+	
+	.container {
+		padding-right: 15px;
+		margin-right: auto;
+		margin-left: 5px;
+		height:100% !important;
+	}
+	
+	.center {
+		text-align: center;
+	}
+	
+	.container-fluid{
+		padding-top:50px;
+		height:100% !important;
+	}
+	
+	.col-sm-6{
+		height:100% !important;
+	}
+	
+	.row{
+		height:100%;
+	}
+	
+	.field{
+		display: inline-block;
+		width: 100%;
+		height: 40px;
+		padding: 6px 12px;
+		font-size: 20px;
+		line-height: 1.42857143;
+		color: #555;
+		background-color: #fff;
+		background-image: none;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+		box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+		-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+		-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+		transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+
+	}
+	
+	.purpose, .working{
+		margin-bottom:15px;
+		height: 40px;
+		display: block; 
+		line-height:40px;
+	}
+	
+	.purposeInput{
+		margin-bottom:15px;
+	}
+	
+	.instruction {
+		margin-bottom:5px;
+	}
+	
+	html,body {
+		margin:0
+		width:100%;
+		height:100%;
+		background-image: radial-gradient(60% bottom, #ffffff, #c3c3c3);
+		background-image: -o-radial-gradient(60% bottom, #ffffff, #c3c3c3);
+		background-image: -ms-radial-gradient(60% bottom, #ffffff, #c3c3c3);
+		background-image: -moz-radial-gradient(60% bottom, #ffffff, #c3c3c3);
+		background-image: -webkit-radial-gradient(60% bottom, #ffffff, #c3c3c3);
+		background-repeat: no-repeat;
+		overflow-y:scroll;
+		overflow-x:hidden;
+		min-height: 100% !important;
+	}
+
+  </style>
+</head>
+<body>
+<div id="overlay" style="width:100%; height;100%; top:0px; left:0px;  position: absolute; z-index: 1000; background-color:rgba(0, 0, 0, 0.7); display:none;">
+	<div id="cameraWrapper" style="" align="center">
+		<div id="cameraCanvas" style="width:720px; height:540px; background-color:#000000;">
+			<video id="video"></video>
+			<canvas id="canvas" style="display:none;"></canvas>
+			<div id="buttoncontent">
+			</div>
+			<img id="photo">
+		</div><br>
+		<div id="videoBtn" style="float: right; position: relative; left: -40%; text-align: left;">
+			<div id="button" style="float:left;">
+				<button id="startbutton">CAPTURE</button>
+			</div>
+			<div id="close" style="float:left; padding-left:10px;">
+				<button id="startbutton" onclick="closeOverlay()">CLOSE</button>
+			</div>
+		</div>
+	</div>
+</div>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#myPage">VISITOR SNIFFER APPLICATION</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-left">
+        <!--li class="active"><a href="#about">Purpose of Check</a></li>
+        <li><a>Green ID</a></li>
+        <li><a>160 Point ID</a></li>
+        <li><a>Additional Info</a></li>
+        <li><a>Submit</a></li-->
+      </ul>
+	  <ul class="nav navbar-nav navbar-right">
+        <li><a href="#about" id="saveBtn">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6" style="background-color:rgba(255, 255, 255, 0.6); height:100%; border-right:1px solid #c3c3c3;">
+		<form method="post" name="purposeForm" id="visitorForm" action="javascript:input.getInput('visitorForm')">
+			<div style="font-family:arial, helvetica; font-size:17px; margin:20px 0px 0px 0px; font-weight:bold;">VISITOR DETAILS: </div>
+			<div style="font-family:arial, helvetica; font-size:12px; margin:0px 0px 20px 20px;"><i> *Please edit content as needed</i></div>
+				<div style="font-size:14px;">
+					<div class="radioBtnRight" style="float:left; margin-left:20px; width:25%;">
+						<div class="purpose">COMPANY: </div>
+						<div class="purpose">ID NUMBER: </div>
+						<div class="purpose">NAME: </div>
+						<div class="purpose">PERSON TO VISIT: </div>
+						<div class="purpose">DEPARTMENT: </div>
+						<div class="purpose">DATE: </div>
+						<div class="purpose">TIME IN: </div>
+						<div class="purpose">TIME OUT: </div>
+					</div>
+					<div class="radioBtnLeft" style="float:left; width:70%;">
+						<div class="purposeInput"><input class="field" type="text" name="company" id="company"></div>
+						<div class="purposeInput"><input class="field" type="text" name="idNumber" id="idNumber"></div>
+						<div class="purposeInput"><input class="field" type="text" name="name" id="name"></div>
+						<div class="purposeInput"><input class="field" type="text" name="personToVisit" id="personToVisit" placeholder="Person To Visit"></div>
+						<div class="purposeInput"><input class="field" type="text" name="department" id="department" placeholder="Department To Visit"></div>
+						<div class="purposeInput"><input class="field" type="text" name="date" id="date"></div>
+						<div class="purposeInput"><input class="field" type="text" name="timeIn" id="timeIn"></div>
+						<div class="purposeInput"><input class="field" type="text" name="timeOut" id="timeOut" placeholder="HH : MM : SS"></div>
+						
+					</div>
+				</div>
+			<div style="text-align:center; margin:470px 20px 0px 20px; padding-top:20px;"><input type="submit" value="Save Visitor Details"></div>
+		</form>
+	</div>
+    <div class="col-sm-6" style="background-color:rgba(255, 255, 255, 0.6); height:800px;">
+		<div style="font-family:arial, helvetica; font-size:17px; margin:20px 0px 0px 0px; font-weight:bold;">CHOOSE ONE VISITOR SOURCE:</div>
+			<div style="font-family:arial, helvetica; font-size:12px; margin:0px 0px 20px 20px;"><i> *Please choose one visitor input source</i></div>
+		<!--form method="post" action="php/parseUpload.php" enctype="multipart/form-data"-->
+		<div style="font-family:arial, helvetica; font-size:17px; margin:20px 0px 0px 0px; font-weight:bold;">GET QRCODE:</div>
+		<div style="margin:10px 0px 0px 0px;">
+			<input type="submit" class="box" id="qrcode" value=" Launch Camera " onclick="launchCamera()">
+		</div>
+		<div style="font-family:arial, helvetica; font-size:17px; margin:20px 0px 0px 0px; font-weight:bold;">UPLOAD FROM LOCAL FILE:</div><br>
+			<table width="350" border="0" cellpadding="1" cellspacing="1" class="box">
+				<tr> 
+					<td width="60%">
+						<input type="hidden" name="MAX_FILE_SIZE" value="2000000">
+						<input name="userfile" type="file" id="userfile" onclick="reset()"> 
+					</td>
+					<td width="40%">
+						<input name="upload" type="submit" class="box" id="local" value=" Process File " onclick="getVisitorDetails('local')">
+					</td>
+				</tr>
+			</table><br>
+		<!--/form-->
+		<div style="font-family:arial, helvetica; font-size:17px; margin:20px 0px 0px 0px; font-weight:bold;">SCANNED DETAILS:</div>
+		<div style="margin:0px 0px 20px 0px;"><textarea rows="5" cols="80" id="visitorDetails" name="visitorDetails" form="purposeForm" placeholder="Copy and paste scanned visitor details here..." onclick="reset()"></textarea></div>
+		<div style="text-align:center; margin:10px 20px 0px 20px;"><input type="submit" id="textarea" value=" Get Details " onclick="getVisitorDetails('textarea')"></div><br>
+	</div>
+  </div>
+</div>
+</body>
+<script>
+	var camera = new Camera();
+	
+	window.onload = function(){
+		var overlay = document.getElementById('overlay');
+		overlay.style.height = window.innerHeight + "px";
+		var cameraWrapper = document.getElementById('cameraWrapper');
+		cameraWrapper.style.position = "absolute";
+		cameraWrapper.style.top = (window.innerHeight-540)*.5 + "px";
+		cameraWrapper.style.left = (window.innerWidth-720)*.5 + "px";
+	}
+	
+	function closeOverlay(){
+		document.getElementById('overlay').style.display = "none";
+		camera.stopCamera();
+	}
+	
+	function launchCamera(){
+		document.getElementById('overlay').style.display = "block";
+		var videoSize =  document.getElementById('video');
+		camera.startCamera();
+		video.style.width = '720px';
+		video.style.height = '540px';
+	}
+</script>
+</html>
